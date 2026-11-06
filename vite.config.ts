@@ -22,6 +22,6 @@ function spaFallback(): Plugin {
 export default defineConfig({
   plugins: [svelte(), tailwindcss(), spaFallback()],
   build: {
-    outDir: 'build',
+    outDir: '.dist',
   },
 })
