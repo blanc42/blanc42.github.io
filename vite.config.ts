@@ -9,11 +9,14 @@ import { defineConfig, type Plugin } from 'vite'
  * for client-side routes like /blog.
  */
 function spaFallback(): Plugin {
+  let outDir = 'dist'
   return {
     name: 'spa-fallback-404',
+    configResolved(config) {
+      outDir = resolve(config.root, config.build.outDir)
+    },
     writeBundle() {
-      const out = resolve(process.cwd(), 'build')
-      copyFileSync(resolve(out, 'index.html'), resolve(out, '404.html'))
+      copyFileSync(resolve(outDir, 'index.html'), resolve(outDir, '404.html'))
     },
   }
 }
@@ -22,6 +25,6 @@ function spaFallback(): Plugin {
 export default defineConfig({
   plugins: [svelte(), tailwindcss(), spaFallback()],
   build: {
-    outDir: '.dist',
+    outDir: 'dist',
   },
 })
